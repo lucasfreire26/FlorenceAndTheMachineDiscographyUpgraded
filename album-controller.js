@@ -45,6 +45,7 @@ exports.updateAlbum = function(req, res) {
 };
 
 exports.deleteAlbum = function(req, res) {
+    console.log(req.params)
   Album.findByIdAndRemove(req.params.id, function (err, album) {
     if (err) {
       res.status(400).json(err);
