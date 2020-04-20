@@ -65,6 +65,7 @@ router.get('/albums', albumCtrl.getAlbums);
 router.get('/albums/:id', albumCtrl.getAlbum);
 
 router.delete('/albums/:id', albumCtrl.deleteAlbum);
+// update
 router.put('/albums/:id', albumCtrl.updateAlbum);
 
 router.get('/', function(req, res) {

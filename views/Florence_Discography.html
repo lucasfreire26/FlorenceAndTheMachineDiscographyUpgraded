@@ -15,7 +15,7 @@
   <link href="css/Florence_discography.css" rel="stylesheet">
 
         <script src="Florence_Discography.js"></script>
-<script>
+<script src="">
 window.addEventListener("load", function() { 
 document.forms[0].txtBillAmt.value = calculateBill('menuTable');
 document.querySelector("#calcBill").addEventListener("click", function() { 
@@ -105,6 +105,50 @@ div {
   <script src="bootstrap.min.js"></script>
   <script src="jquery/table.js"></script>
   <script src="Florence_discography.js"></script>
+
+<tr class = "bg-info">
+
+    <th>Title</th>
+    <th>Year of Release</th>
+    <th>Price<th>
+    </tr>
+
+<tbody id="myTable">
+
+</tbody>
+
+<table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+
+    var myArray = []
+    
+$.ajax({
+    method:'GET',
+    url:'https://3000-cd5f99cd-4ccc-47da-a020-051be6ceb3/albums'
+    success:function(response){
+       myArray - response.data
+       buildTable(myArray)
+       console.log(myArray) 
+    }
+
+})
+
+function buildTable(data){
+    var table = document.getElementById('myTable')
+
+    for (var i = 0; i < data.length; i++){
+        var row = <tr>
+                        <td>${data[i].title}</td>
+                        <td>${data[i].year}</td>
+                        <td>${data[i].price}</td>
+                    </tr>
+        table.innerHTML += row
+
+    }
+}
+</script>
+</table>
+
 </body>
 
 </html>
