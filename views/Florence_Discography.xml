@@ -60,4 +60,22 @@
     <yearOfRelease>2021</yearOfRelease>
     <price>7666</price>
   </cd>
+  <cd>
+    <title>asd</title>
+    <img>img</img>
+    <yearOfRelease>2010</yearOfRelease>
+    <price>1.99</price>
+  </cd>
+  <cd>
+    <title>asd</title>
+    <img>img</img>
+    <yearOfRelease>2010</yearOfRelease>
+    <price>1.99</price>
+  </cd>
+  <cd>
+    <title>asd</title>
+    <img>img</img>
+    <yearOfRelease>2010</yearOfRelease>
+    <price>1.99</price>
+  </cd>
 </florenceDiscography>

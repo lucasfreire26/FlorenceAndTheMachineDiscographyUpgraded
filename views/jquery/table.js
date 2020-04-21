@@ -1,4 +1,5 @@
 function draw_table(){
+
     $("#results").empty();
     $.getJSONuncached = function(url) {
         return $.ajax({
@@ -47,9 +48,9 @@ function delete_row(sec, ent)
 };
 
 //function to draw the table
-$(document).ready(function(){
-    draw_table();
-})
+//$(document).ready(function(){
+ //   draw_table();
+//})
 
 // code source at: https://www.w3schools.com/js/js_validation.asp
 function validateForm() {
@@ -66,10 +67,5 @@ else if (year == "") {
     alert("Year must be filled out");
     return false;
 }
-/*I had to comment this part because the validation for the price just stopped working, and I couldnt find the reason*/
 
-/*else if (price == ""); {
-    alert("Price must be filled out");
-    return false;
-  }*/
 }

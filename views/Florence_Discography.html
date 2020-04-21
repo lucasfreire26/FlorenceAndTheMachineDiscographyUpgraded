@@ -1,153 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--  //this code was adapted from Mikhail's code at: https://github.com/mikhail-cct/CA1-In-class-Demo  -->
+
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-  <title>IWA Demo App</title>
+	<title>IWA Demo App</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="bootstrap.min.css" rel="stylesheet">
-  <link href="css/Florence_discography.css" rel="stylesheet">
+	<!-- Bootstrap core CSS -->
+	<link href="bootstrap.min.css" rel="stylesheet">
+	<link href="css/Florence_discography.css" rel="stylesheet">
 
-        <script src="Florence_Discography.js"></script>
-<script src="">
-window.addEventListener("load", function() { 
-document.forms[0].txtBillAmt.value = calculateBill('menuTable');
-document.querySelector("#calcBill").addEventListener("click", function() { 
-    document.forms[0].txtBillAmt.value = calculateBill('menuTable'); 
-    });
- document.querySelector("#showLive").addEventListener("click", function() { bshowLive('menuTable', this.checked); 
- }); 
- });
-</script>
+	<script src="views/Florence_Discography.js"></script>
+
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="jquery/jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<script src="jquery/table.js"></script>
+
+	<script src="">
+		window.addEventListener("load", function() { 
+            document.forms[0].txtBillAmt.value = calculateBill('menuTable');
+            document.querySelector("#calcBill").addEventListener("click", function() { 
+                document.forms[0].txtBillAmt.value = calculateBill('menuTable'); 
+            });
+            document.querySelector("#showLive").addEventListener("click", function() { 
+                bshowLive('menuTable', this.checked); 
+            }); 
+        });
+	</script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		var myArray = []
+    
+        $.ajax({
+            method:'GET',
+            url:'/albums',
+            success: function(response) {
+                console.log(response)
+                response['live'] = false;
+                myArray = response;
+                buildTable(myArray);
+                console.log(myArray) 
+            }
+
+        })
+
+    function goBack() {
+        window.history.back();
+    }
+
+    function buildTable(data){
+        var table = document.getElementById('myTable')
+
+        for (var i = 0; i < data.length; i++) {
+
+            var row = `<tr id="${data[i]._id}" live="${data[i].live}">
+                <td align="center">
+                    <input id="${data[i]._id}" type="checkbox" />
+                </td>
+                <td>
+                    ${data[i].title}
+                </td>
+                <td align="right">
+                    <img src="https://image.redbull.com/rbcom/010/2015-03-02/1331708957154_2/0001/1/1800/1/florence-the-machine.jpg" class="igm-thumbnail" width="100" height="100"/>
+                </td>
+                <td align="right">
+                    ${new Date(data[i].year).getFullYear()}
+                </td>
+                <td align="right">
+                    ${data[i].price}
+                </td>
+            </tr>`;
+            table.innerHTML += row;
+
+        }
+    }
+
+
+    function deleteTableRow() {
+        myArray.forEach(function (album) {
+            var selected = $('input#'+album._id).val()
+
+            console.log(album, selected)
+        })
+    }
+	</script>
 </head>
 
 <body>
 
-<style>
-div {
-  background-image: url('https://image.redbull.com/rbcom/010/2015-03-02/1331708957154_2/0001/1/1800/1/florence-the-machine.jpg');
-    background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-}
-</style>
+	<style>
+		div {
+			background-image: url('https://image.redbull.com/rbcom/010/2015-03-02/1331708957154_2/0001/1/1800/1/florence-the-machine.jpg');
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: 100% 100%;
+		}
+	</style>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Florence Discography</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">Florence Discography</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Services</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-  <!-- Page Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h1 class="mt-5">Florence and the Machine: Time to purchase music!</h1>
-        <p class="lead">Select which CDs you would like to purchase below.</p>
-      </div>
-      <div id="results" class="col-lg-9"></div>
-      <div class="col-lg-3 text-center order-2">
-      <!-- form -->
-            <form name="myForm" enctype="application/json" action="/post/json" onsubmit="return validateForm()" method="post">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="title" placeholder="Title">
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h1 class="mt-5">Florence and the Machine: Time to purchase music!</h1>
+				<p class="lead">Select which CDs you would like to purchase below.</p>
+			</div>
+			<div id="results" class="col-lg-9">
+				<table id="menuTable" class="indent table-hover">
+					<thead>
+						<tr>
+							<th colspan="5">Florence and the Machine Discography</th>
+						</tr>
+						<tr>
+							<th>Select</th>
+							<th>CD title</th>
+							<th>Cover</th>
+							<th>Year of Release</th>
+							<th>Price</th>
+						</tr>
+
+					</thead>
+					<tbody id="myTable">
+						<tr>
+							<td colspan="5"></td>
+						</tr>
+					</tbody>
+				</table>
+				<form class="indent">
+					<!-- button to calculate the bill -->
+					<p>
+						<input type="button" name="btnCalcBill" value="Calculate Bill" id="calcBill" />
+				Total: €
+						<input type="text" name="txtBillAmt" /><input type="checkbox" name="cbOpts" value="isLive" id="showLive" /><label for="showLive">Show Live cds</label>
+					</p>
+				</form>
+			</div>
+			<div class="col-lg-3 text-center order-2">
+				<!-- form -->
+				<form name="myForm" enctype="application/json" action="/albums_submit" onsubmit="return validateForm()"
+					method="post">
+					<div class="form-group">
+						<input class="form-control" type="text" name="title" placeholder="Title">
                 </div>
-                <div class="form-group">
-                    <input class="form-control" type="int" name="year" placeholder="Year of Release">
+						<div class="form-group">
+							<input class="form-control" type="int" name="year" placeholder="Year of Release">
                 </div>
-                <div class="form-group">
-                    <input class="form-control" type="float" name="price" placeholder="Price">
+							<div class="form-group">
+								<input class="form-control" type="float" name="price" placeholder="Price">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <button id="delete" class="btn btn-block btn-danger">Delete</button>
-                    <p class="text-muted">To delete a CD, click the required row first</p>
-        </div>
-    </div>
-  </div>
+								<button type="submit" class="btn btn-primary" onClick="window.location.href = '/';">Submit</button>
+				</form>
+                <form name="myForm2" enctype="application/json" action="/albums/:id" method="delete">
+				<button id="delete" class="btn btn-block btn-danger">Delete</button>
+                </form>
+				<p class="text-muted">To delete a CD, click the required row first</p>
+			</div>
+		</div>
+	</div>
 
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted">&copy; 2019</span>
-      </div>
-    </footer>
+	<footer class="footer">
+		<div class="container">
+			<span class="text-muted">&copy; 2019</span>
+		</div>
+	</footer>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="jquery/jquery.min.js"></script>
-  <script src="bootstrap.min.js"></script>
-  <script src="jquery/table.js"></script>
-  <script src="Florence_discography.js"></script>
 
-<tr class = "bg-info">
-
-    <th>Title</th>
-    <th>Year of Release</th>
-    <th>Price<th>
-    </tr>
-
-<tbody id="myTable">
-
-</tbody>
-
-<table>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-
-    var myArray = []
-    
-$.ajax({
-    method:'GET',
-    url:'https://3000-cd5f99cd-4ccc-47da-a020-051be6ceb3/albums'
-    success:function(response){
-       myArray - response.data
-       buildTable(myArray)
-       console.log(myArray) 
-    }
-
-})
-
-function buildTable(data){
-    var table = document.getElementById('myTable')
-
-    for (var i = 0; i < data.length; i++){
-        var row = <tr>
-                        <td>${data[i].title}</td>
-                        <td>${data[i].year}</td>
-                        <td>${data[i].price}</td>
-                    </tr>
-        table.innerHTML += row
-
-    }
-}
-</script>
-</table>
 
 </body>
 

@@ -31,9 +31,9 @@ router.use(express.json());
 router.use(expAutoSan.all);
 
 //router.use(bodyparser.json());
-//router.set('views', path.join(__dirname, '/views/'));
-//router.engine('html', exphbs({ extname: 'html', defaultLayout: '', layoutsDir: __dirname + '/views/layouts/' }));
-//router.set('view engine', 'hbs');
+//router.set('views', path.join(__dirname, '/views'));
+//router.engine('html', exphbs({ extname: 'html', defaultLayout: 'Florence_Discography', layoutsDir: __dirname + '/views' }));
+//router.set('view engine', 'html');
 
 // Function to read in XML file and convert it to JSON
 function xmlFileToJs(filename, cb) {
@@ -58,7 +58,13 @@ function jsToXmlFile(filename, obj, cb) {
 
 //})
 
-router.post('/albums', albumCtrl.createAlbum);
+router.post('/albums',albumCtrl.createAlbum);
+
+router.post('/albums_submit', function(req, res) {
+    albumCtrl.createAlbum(req,res);
+
+    res.redirect('back');
+})
 
 router.get('/albums', albumCtrl.getAlbums);
 
