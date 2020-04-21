@@ -18,7 +18,12 @@ var router = express();
 var server = http.createServer(router);
 var albumCtrl = require('./album-controller')
 
-
+//var connection = mysql.createConnection({
+ //         host: variable.env.DB_HOST
+   //       user: variable.env.DB_USER
+      //    password: variable.env.DB_PASS
+      //    database: variable.env.database
+       // });
 
 mongoose = require( 'mongoose');
 
@@ -180,7 +185,10 @@ var addr = server.address();
 console.log("Server is listening at", addr.address + ":" + addr.port)
 });
 
+require('dotenv').config()
 mongoose.connect('mongodb+srv://lucasf:cctstudent@cluster0-pdign.mongodb.net/test?retryWrites=true&w=majority');
+
+
 
 mongoose.connection.on('error', (err) => { 
     console.log('Mongodb Error: ', err); 
