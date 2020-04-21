@@ -11,11 +11,15 @@
 
 	<title>IWA Demo App</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+    <script src="sketch.js"></script>
+
 	<!-- Bootstrap core CSS -->
 	<link href="bootstrap.min.css" rel="stylesheet">
 	<link href="css/Florence_discography.css" rel="stylesheet">
 
 	<script src="views/Florence_Discography.js"></script>
+
 
 
 	<!-- Bootstrap core JavaScript -->
@@ -37,7 +41,9 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-		var myArray = []
+        var myArray = []
+        const deleteUrl = "https://3000-cd5f99cd-4ccc-47da-a020-051be6ceb364.ws-eu01.gitpod.io/albums"
+        var cid = "";
     
         $.ajax({
             method:'GET',
@@ -55,6 +61,7 @@
     function goBack() {
         window.history.back();
     }
+ 
 
     function buildTable(data){
         var table = document.getElementById('myTable')
@@ -79,18 +86,29 @@
                 </td>
             </tr>`;
             table.innerHTML += row;
+$('#myTable tr').click(function(){
+    cid = $(this).attr('id');
+    console.log(cid);
+    var cval = $(this).text();
 
+    
+
+});
         }
     }
 
 
-    function deleteTableRow() {
-        myArray.forEach(function (album) {
-            var selected = $('input#'+album._id).val()
+function deleteData(item, url) {
+  return fetch(url + '/' + item, {
+    method: 'delete'
+  }).then(response =>
+    response.json().then(json => {
+      return json;
+    })
+  );
+}
 
-            console.log(album, selected)
-        })
-    }
+
 	</script>
 </head>
 
@@ -186,7 +204,7 @@
 								<button type="submit" class="btn btn-primary" onClick="window.location.href = '/';">Submit</button>
 				</form>
                 <form name="myForm2" enctype="application/json" action="/albums/:id" method="post">
-				<button id="delete" class="btn btn-block btn-danger">Delete</button>
+				<button id="delete" type="button"  value="" onclick="deleteData(cid, deleteUrl);">Delete</button>
                 </form>
 				<p class="text-muted">To delete a CD, click the required row first</p>
 			</div>
