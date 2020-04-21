@@ -89,7 +89,7 @@
 $('#myTable tr').click(function(){
     cid = $(this).attr('id');
     console.log(cid);
-    var cval = $(this).text();
+
 
     
 
@@ -98,8 +98,8 @@ $('#myTable tr').click(function(){
     }
 
 
-function deleteData(item, url) {
-  return fetch(url + '/' + item, {
+function deleteData(id, url) {
+  return fetch(url + '/' + id, {
     method: 'delete'
   }).then(response =>
     response.json().then(json => {
