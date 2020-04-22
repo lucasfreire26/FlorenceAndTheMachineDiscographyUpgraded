@@ -11,8 +11,8 @@
 
 	<title>IWA Demo App</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-    <script src="sketch.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+	<script src="sketch.js"></script>
 
 	<!-- Bootstrap core CSS -->
 	<link href="bootstrap.min.css" rel="stylesheet">
@@ -41,30 +41,21 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-        var myArray = []
+		var myArray = []
         const deleteUrl = "https://3000-cd5f99cd-4ccc-47da-a020-051be6ceb364.ws-eu01.gitpod.io/albums"
         var cid = "";
     
-        $.ajax({
-            method:'GET',
-            url:'/albums',
-            success: function(response) {
-                console.log(response)
-                response['live'] = false;
-                myArray = response;
-                buildTable(myArray);
-                console.log(myArray) 
-            }
+        
 
-        })
-
-    function goBack() {
-        window.history.back();
-    }
+        function goBack() {
+            window.history.back();
+        }
  
 
     function buildTable(data){
         var table = document.getElementById('myTable')
+
+        table.innerHTML = ''
 
         for (var i = 0; i < data.length; i++) {
 
@@ -97,12 +88,43 @@ $('#myTable tr').click(function(){
         }
     }
 
+    function getDataAndBuildTable() {
+        $.ajax({
+            method:'GET',
+            url:'/albums',
+            success: function(response) {
+                console.log(response)
+                response['live'] = false;
+                myArray = response;
+                buildTable(myArray);
+                console.log(myArray) 
+            }
+        })
+    }
+
+    getDataAndBuildTable()
+
+
+function createData() {
+    var data = {
+        title: $('#create-title').val(),
+        year: $('#create-year').val(),
+        price: $('#create-price').val()
+    }
+    console.log(data)
+
+    $.post('/albums',data, function(response) {
+        getDataAndBuildTable()
+    })
+}
 
 function deleteData(id, url) {
   return fetch(url + '/' + id, {
     method: 'delete'
   }).then(response =>
     response.json().then(json => {
+        getDataAndBuildTable()
+
       return json;
     })
   );
@@ -190,22 +212,22 @@ function deleteData(id, url) {
 			</div>
 			<div class="col-lg-3 text-center order-2">
 				<!-- form -->
-				<form name="myForm" enctype="application/json" action="/albums_submit" onsubmit="return validateForm()"
+				<form id="myForm" enctype="application/json" action="/albums_submit" onsubmit="return validateForm()"
 					method="post">
-					<div class="form-group">
-						<input class="form-control" type="text" name="title" placeholder="Title">
-                </div>
-						<div class="form-group">
-							<input class="form-control" type="int" name="year" placeholder="Year of Release">
-                </div>
-							<div class="form-group">
-								<input class="form-control" type="float" name="price" placeholder="Price">
-                </div>
-								<button type="submit" class="btn btn-primary" onClick="window.location.href = '/';">Submit</button>
+                    <div class="form-group">
+                            <input class="form-control" type="text" name="title" id="create-title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                                <input class="form-control" type="int" name="year" id="create-year"  placeholder="Year of Release">
+                    </div>
+                    <div class="form-group">
+                                    <input class="form-control" type="float" name="price" id="create-price" placeholder="Price">
+                    </div>
+								<button type="button" class="btn btn-primary" onclick="createData()">Submit</button>
 				</form>
-                <form name="myForm2" enctype="application/json" action="/albums/:id" method="post">
-				<button id="delete" type="button"  value="" onclick="deleteData(cid, deleteUrl);">Delete</button>
-                </form>
+				<form name="myForm2" enctype="application/json" action="/albums/:id" method="post">
+					<button id="delete" type="button"  value="" onclick="deleteData(cid, deleteUrl);">Delete</button>
+				</form>
 				<p class="text-muted">To delete a CD, click the required row first</p>
 			</div>
 		</div>

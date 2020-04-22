@@ -14,7 +14,7 @@ exports.createAlbum = function(req, res) {
         }
 
         res.json(album); 
-});
+    });
 };
 
 exports.getAlbums = function(req, res) {
