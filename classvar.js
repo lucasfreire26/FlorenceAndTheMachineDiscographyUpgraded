@@ -25,7 +25,9 @@ var albumCtrl = require('./album-controller')
       //    database: variable.env.database
        // });
 
-mongoose = require( 'mongoose');
+mongoose = require( 'mongoose'),
+require('dotenv').config;
+
 
 router.use(bodyParser.urlencoded());
 router.use(bodyParser.json());
@@ -186,7 +188,7 @@ console.log("Server is listening at", addr.address + ":" + addr.port)
 });
 
 require('dotenv').config()
-mongoose.connect('mongodb+srv://lucasf:cctstudent@cluster0-pdign.mongodb.net/test?retryWrites=true&w=majority');
+mongoose.connect(process.env.MONGODB_URL);
 
 
 
