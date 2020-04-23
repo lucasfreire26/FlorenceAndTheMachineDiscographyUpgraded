@@ -188,7 +188,7 @@ console.log("Server is listening at", addr.address + ":" + addr.port)
 });
 
 require('dotenv').config()
-mongoose.connect(process.env.MONGODB_URL);
+mongoose.connect(variable.env.MONGODB_URL);
 
 
 
