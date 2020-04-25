@@ -1,3 +1,6 @@
+//schema for mongodb using mongoose.
+//keys matching my entries in my html table
+
 var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({ 

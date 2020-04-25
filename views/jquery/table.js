@@ -1,18 +1,6 @@
 function draw_table(){
 
-    //$("#results").empty();
-    //$.getJSONuncached = function(url) {
-    //    return $.ajax({
-    //        url: url,
-    //        type: 'GET',
-    //        cache: false,
-    //        success: function(html) {
-    //            $("#results").append(html);
-    //            select_row();
-    //        }
-    //    });
-    //};
-    //$.getJSONuncached("/get/html")
+    
 };
 //function to select the row
 function select_row()
@@ -49,10 +37,6 @@ function delete_row(sec, ent)
 	})
 };
 
-//function to draw the table
-//$(document).ready(function(){
- //   draw_table();
-//})
 
 // code source at: https://www.w3schools.com/js/js_validation.asp
 function validateForm() {
