@@ -40,7 +40,7 @@ exports.getAlbum = function(req, res) {
   }); 
 };
 
-//function to update an album
+//this is the function to update an album
 exports.updateAlbum = function(req, res) {
   Album.findOneAndUpdate({_id: req.params.id}, req.body, {new: true},function (err, album) {
     if (err) {
